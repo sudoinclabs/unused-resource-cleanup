@@ -3,10 +3,10 @@ AWS Unused Resource Finder
 
 This Terraform module sets up the infrastructure to identify resources which have not been used for `X` days across multiple regions.
 
-Module creates a Lambda function, CloudWatch Events rule (cron) to invoke Lambda, SNS topic to notify user along with reuired roles and policies.
+Module creates a Lambda function, CloudWatch Events rule (cron) to invoke Lambda, SNS topic to notify user along with required roles and policies.
 
 ### Lambda Function Logic:
-Scan account for services across regions while filtering based on CreateTime/launch_time then use cloudtrail logs to identify unused resrouces.
+Scan account for services across regions while filtering based on CreateTime/launch_time then use cloudtrail logs to identify unused resources.
 
 ```py
 Services = ["AWS::EC2::Instance","AWS::EC2::Volume"]
@@ -32,7 +32,7 @@ Module Input Variables
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | IGNORE_WINDOW | Resources with activity in this window will be ignored. Value must be between 1 and 90 | `number` | `15` | No |
-| REGIONS | Comma seperated string of regions | `string` | `"us-east-1, us-east-2"` | No |
+| REGIONS | Comma separated string of regions | `string` | `"us-east-1, us-east-2"` | No |
 | DETAILED_NOTIFICATIONS | TRUE/FALSE, determines if detailed notifications are sent to SNS_ARN | `string` | `"TRUE"` | No |
 | EMAIL | Detailed notifications are sent to this email from SNS Topic | `string` | `"test@test.com"` | No |
 
@@ -42,7 +42,7 @@ Usage
 
 ```hcl
 module "unused-resource-cleanup" {
-  source = "https://github.com/sudoinclabs/unused-resource-cleanup"
+  source = "github.com/sudoinclabs/unused-resource-cleanup"
   EMAIL = "saif.ali@sudoconsultants.com"
   IGNORE_WINDOW =  1
   DETAILED_NOTIFICATIONS = "TRUE"
