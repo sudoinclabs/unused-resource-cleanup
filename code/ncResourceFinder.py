@@ -7,7 +7,7 @@ import botocore
 from botocore.exceptions import ClientError
 
 ### environment variables:
-#### IGNORE_WINDOW -- volumes with activity in this window will be ignored even if they are available; e.g. for a 30 day IGNORE_WINDOW, a volume detached 29 days ago will not be flagged, but a volume detached 31 days ago will. Value must be between 1 and 90
+#### IGNORE_WINDOW -- resources with activity in this window will be ignored even if they are available; e.g. for a 30 day IGNORE_WINDOW, a volume detached 29 days ago will not be flagged, but a volume detached 31 days ago will. Value must be between 1 and 90
 #### SNS_ARN -- Full ARN for SNS topic to send notifications to, this topic is also used to send detailed notifications when enabled
 #### DETAILED_NOTIFICATIONS -- TRUE/FALSE, determines if detailed notifications are sent to SNS_ARN with the list of volumes found
 
@@ -72,8 +72,6 @@ def getNCInstances(rgn, startDateTime, status):
                     ncInstances.append(ins)
     
     return ncInstances
-
-# ----------DO NOT FLAG RESOURCES WHICH HAVE HAD ANY ACTIVITY SINCE startDateTime-----------------
 
 def getCloudTrailEvents(startDateTime, rgn, resourceType):
     # gets CloudTrail events from startDateTime until "now"
@@ -182,7 +180,7 @@ def lambda_handler(event, context):
     print(json.dumps(output, indent=4, default=str))
 
     if(os.environ["DETAILED_NOTIFICATIONS"].upper() == "TRUE"):
-    try:
-        print(detailedNotifier(output))
-    except ClientError as err:
-        print(err)
+        try:
+            print(detailedNotifier(output))
+        except ClientError as err:
+            print(err)

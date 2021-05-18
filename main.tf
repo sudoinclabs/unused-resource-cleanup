@@ -3,7 +3,7 @@ resource "aws_sns_topic" "nc_notify" {
   name = "nc_notify"
 }
 
-# create an email subscription for the SNS topic 
+# Create an email subscription for the SNS topic 
 module "sns-email-subscription" {
   source  = "QuiNovas/sns-email-subscription/aws"
   version = "0.0.3"
